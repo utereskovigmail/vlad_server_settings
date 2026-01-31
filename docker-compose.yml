@@ -1,0 +1,45 @@
+version: "3.9"
+
+networks:
+  transferNet:
+    driver: bridge
+
+services:
+  postgresServerDb:
+    image: postgres:17
+    container_name: postgres_db_vlad
+    restart: always
+    ports:
+      - "5019:5432"
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - /data/transfer/postgres:/var/lib/postgresql/data
+    networks:
+      - transferNet
+    
+  api:
+    #build: ./WebApiTransfer
+    image: utereskovi/transfer-api-vlad:latest
+    container_name: transfer_api_vlad
+    volumes:
+      - /data/transfer/images:/app/images
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ConnectionStrings__DefaultConnection: Host=192.168.64.5;Database=vladDb;Port=5020;Username=vlad;Password=vlad123Dbsecure
+    ports:
+      - "5898:8080"
+    depends_on:
+      - postgresServerDb
+    networks:
+      - transferNet
+
+  front:
+    image: utereskovi/transfer-react-vlad:latest
+    #build: 
+    #  context: ./my-transfer-ts
+    container_name: react_front_vlad
+    ports:
+      - "5021:80"
