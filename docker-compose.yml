@@ -1,3 +1,5 @@
+version: "3.9"
+
 networks:
   transfer_net:
     driver: bridge
@@ -14,7 +16,7 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
-      - /data/transfer/postgres:/var/lib/postgresql
+      - /data/transfer_vlad/postgres:/var/lib/postgresql
     networks:
       - transfer_net
     
