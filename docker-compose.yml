@@ -28,9 +28,9 @@ services:
       - /data/transfer/images:/app/images
     environment:
       ASPNETCORE_ENVIRONMENT: Production
-      ConnectionStrings__DefaultConnection: Host=192.168.64.5;Database=vladDb;Port=5020;Username=vlad;Password=vlad123Dbsecure
+      ConnectionStrings__DefaultConnection: Host=192.168.64.5;Database=vladDb;Port=5019;Username=vlad;Password=vlad123Dbsecure
     ports:
-      - "5898:8080"
+      - "5020:8080"
     depends_on:
       - postgresServerDb
     networks:
